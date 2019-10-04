@@ -17,14 +17,18 @@ Create a `.github/workflows/pull_request.yml` file in your repo:
 
 ```yml
 on: [pull_request]
-name: benchmark pull requests
+name: Benchmarks
 jobs:
   runBenchmark:
     name: run benchmark
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
       - uses: jasonwilliams/criterion-compare-action@move_to_actions
-        env:
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
