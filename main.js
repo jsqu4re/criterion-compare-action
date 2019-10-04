@@ -34,7 +34,6 @@ async function main() {
 
   // An authenticated instance of `@octokit/rest`
   const myToken = core.getInput("GITHUB_TOKEN");
-  core.debug(myToken);
   const octokit = new github.GitHub(myToken);
 
   await octokit.issues.createComment({
@@ -105,7 +104,7 @@ ${benchResults}
   try {
     await main();
   } catch (e) {
-    console.log(e.stack);
+    core.debug(e.stack);
     core.setFailed(`Unhanded error:\n${e}`);
   }
 })();
