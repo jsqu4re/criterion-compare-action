@@ -8,6 +8,14 @@ async function main() {
   core.debug("### Install Critcmp ###");
   await exec.exec("cargo", ["install", "critcmp"]);
 
+  core.debug("### Benchmark starting ###");
+  await exec.exec("cargo", ["bench", "--bench", "benchmark", "--", "--save-baseline", "changes"]);
+  core.debug("Changes benchmarked");
+  await exec.exec("git", ["checkout", "master"]);
+  core.debug("Checked out to master branch");
+  await exec.exec("cargo", ["bench", "--bench", "benchmark", "--", "--save-baseline", "master"]);
+  core.debug("Master benchmarked");
+
   const options = {};
   let myOutput;
   let myError;
